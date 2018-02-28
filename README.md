@@ -9,7 +9,7 @@
 
 ```bash
 git clone https://github.com/notrab/create-react-app-redux.git
-cd create-react-app-redux
+cd interview-pokedex
 yarn
 ```
 

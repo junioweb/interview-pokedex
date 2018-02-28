@@ -1,0 +1,27 @@
+// Bootstrap library
+@import 'bootstrap/scss/bootstrap';
+
+// My Bootstrap configuration
+@import 'custom_bootstrap';
+
+#header {
+  padding: 0;
+}
+
+#menu {
+  background-color: $gray-900;
+
+  .navbar-nav {
+    .nav-link {
+      color: $white;
+    }
+
+    .nav-link:hover {
+      color: $cyan;
+    }
+
+    .active {
+      color: $cyan;
+    }
+  }
+}

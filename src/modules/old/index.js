@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
-import pokemon from './pokemon';
+import counter from './counter';
 
 export default combineReducers({
   router: routerReducer,
-  pokemon
+  counter
 });

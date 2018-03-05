@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Collapse, Button, CardBody, CardHeader, Card } from 'reactstrap';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { detail as detailPokemon } from '../../modules/pokemon';
 
 class Pokemon extends Component {
   constructor(props) {
@@ -8,8 +11,11 @@ class Pokemon extends Component {
     this.state = { collapse: false };
   }
 
-  toggle() {
+  toggle(pokemon) {
     this.setState({ collapse: !this.state.collapse });
+    if (this.state.collapse) {
+      this.props.detailPokemon(pokemon);
+    }
   }
 
   render() {
@@ -19,13 +25,14 @@ class Pokemon extends Component {
           <CardHeader>
             <Button
               color="primary"
-              onClick={this.toggle}
+              onClick={this.toggle(this.props.data)}
               style={{ marginBottom: '1rem' }}>
               {this.props.data.name}
             </Button>
           </CardHeader>
           <Collapse isOpen={this.state.collapse}>
             <CardBody>
+              {this.props.pokemon.ability}
               <a href={this.props.data.url} target="_blank">
                 Mais detalhes
               </a>
@@ -37,4 +44,16 @@ class Pokemon extends Component {
   }
 }
 
-export default Pokemon;
+const mapStateToProps = state => ({
+  pokemon: state.pokemon.detail
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      detailPokemon
+    },
+    dispatch
+  );
+
+export default connect(mapStateToProps, mapDispatchToProps)(Pokemon);

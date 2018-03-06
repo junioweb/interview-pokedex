@@ -15,11 +15,6 @@ export default (state = initialState, action) => {
         ...state,
         list: action.payload
       };
-    case DETAIL:
-      return {
-        ...state,
-        detail: action.payload
-      };
 
     default:
       return state;
@@ -28,13 +23,16 @@ export default (state = initialState, action) => {
 
 export const list = () => {
   return dispatch =>
-    axios.get('https://pokeapi.co/api/v2/pokemon/').then(response =>
+    axios.get('https://pokeapi.co/api/v2/pokemon').then(response =>
       dispatch({
         type: LIST,
         payload: response.data
       })
     );
 };
+
+// http://www.mocky.io/v2/5a9df3603000004d002349b1
+// https://pokeapi.co/api/v2/pokemon
 
 export const detail = param => {
   return dispatch =>

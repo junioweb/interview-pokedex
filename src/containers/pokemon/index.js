@@ -1,41 +1,71 @@
 import React, { Component } from 'react';
-import { Collapse, Button, CardBody, CardHeader, Card } from 'reactstrap';
+import _ from 'lodash';
+import {
+  Collapse,
+  Button,
+  CardBody,
+  CardHeader,
+  Card,
+  Row,
+  Col
+} from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { detail as detailPokemon } from '../../modules/pokemon';
+import DetailsPokemon from '../../components/detailsPokemon';
+import Loading from '../../components/loading';
 
 class Pokemon extends Component {
   constructor(props) {
     super(props);
     this.toggle = this.toggle.bind(this);
-    this.state = { collapse: false };
+    this.state = {
+      collapse: false,
+      pokemon: {}
+    };
   }
 
   toggle(pokemon) {
-    this.setState({ collapse: !this.state.collapse });
-    if (this.state.collapse) {
-      this.props.detailPokemon(pokemon);
-    }
+    this.setState((prevState, props) => {
+      if (!prevState.collapse) {
+        this.props
+          .detailPokemon(pokemon)
+          .then(response => this.setState({ pokemon: response.payload }));
+      }
+
+      return {
+        collapse: !prevState.collapse,
+        pokemon: props.pokemon
+      };
+    });
   }
 
   render() {
+    const Details = props => {
+      if (_.isEmpty(props.data)) {
+        return <Loading className="loading-pokemons" />;
+      }
+
+      return <DetailsPokemon pokemon={props.data} />;
+    };
+
     return (
       <div>
-        <Card>
+        <Card className="pokemon">
           <CardHeader>
             <Button
               color="primary"
-              onClick={this.toggle(this.props.data)}
-              style={{ marginBottom: '1rem' }}>
+              onClick={() => this.toggle(this.props.data)}>
               {this.props.data.name}
             </Button>
           </CardHeader>
           <Collapse isOpen={this.state.collapse}>
             <CardBody>
-              {this.props.pokemon.ability}
-              <a href={this.props.data.url} target="_blank">
-                Mais detalhes
-              </a>
+              <Row>
+                <Col>
+                  <Details data={this.state.pokemon} />
+                </Col>
+              </Row>
             </CardBody>
           </Collapse>
         </Card>

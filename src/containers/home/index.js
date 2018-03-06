@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 import { push } from 'react-router-redux';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { list as listPokemons } from '../../modules/pokemon';
 import Pokedex from '../pokedex';
+import Loading from '../../components/loading';
+
+import { Row, Col } from 'reactstrap';
 
 class Home extends Component {
   componentDidMount() {
@@ -11,9 +15,22 @@ class Home extends Component {
   }
 
   render() {
+    const Home = props => {
+      if (_.isEmpty(props.pokemons)) {
+        return <Loading />;
+      }
+
+      return <Pokedex pokemons={props.pokemons} />;
+    };
+
     return (
       <div>
-        <Pokedex pokemons={this.props.pokemons} />
+        <Row>
+          <Col>
+            <h3>Busca</h3>
+            <Home pokemons={this.props.pokemons} />
+          </Col>
+        </Row>
       </div>
     );
   }

@@ -5,7 +5,10 @@
 @import 'custom_bootstrap';
 
 #header {
+  width: 100vw;
+  margin: 0;
   padding: 0;
+  overflow-x: 0;
 }
 
 #menu {
@@ -22,6 +25,20 @@
 
     .active {
       color: $cyan;
+    }
+  }
+}
+
+.pokemon {
+  margin: 10px 0;
+
+  .loading-pokemons {
+    width: 96px;
+  }
+
+  .details {
+    .lead {
+      font-size: $font-details;
     }
   }
 }

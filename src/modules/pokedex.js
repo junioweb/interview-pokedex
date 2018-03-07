@@ -28,12 +28,14 @@ export default (state = initialState, action) => {
 
 export const list = () => {
   return dispatch =>
-    axios.get('https://pokeapi.co/api/v2/pokemon/').then(response =>
-      dispatch({
-        type: LIST,
-        payload: response.data
-      })
-    );
+    axios
+      .get('http://www.mocky.io/v2/5a9df3603000004d002349b1')
+      .then(response =>
+        dispatch({
+          type: LIST,
+          payload: response.data
+        })
+      );
 };
 
 // http://www.mocky.io/v2/5a9df3603000004d002349b1

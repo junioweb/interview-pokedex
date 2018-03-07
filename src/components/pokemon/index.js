@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import _ from 'lodash';
+import { detail as detailPokemon } from '../../modules/pokemon';
+import DetailsPokemon from '../detailsPokemon';
+import Loading from '../loading';
 import {
   Collapse,
   Button,
@@ -9,11 +14,6 @@ import {
   Row,
   Col
 } from 'reactstrap';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { detail as detailPokemon } from '../../modules/pokemon';
-import DetailsPokemon from '../../components/detailsPokemon';
-import Loading from '../../components/loading';
 
 class Pokemon extends Component {
   constructor(props) {
@@ -55,6 +55,8 @@ class Pokemon extends Component {
           <CardHeader>
             <Button
               color="primary"
+              size="lg"
+              block
               onClick={() => this.toggle(this.props.data)}>
               {this.props.data.name}
             </Button>

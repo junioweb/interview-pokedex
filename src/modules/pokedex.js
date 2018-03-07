@@ -1,15 +1,37 @@
 import axios from 'axios';
 
-export const LIST = 'pokemon/LIST';
-export const DETAIL = 'pokemon/DETAIL';
-export const CHANGE_LIST = 'pokemon/CHANGE_LIST';
+export const ADD = 'pokedex/ADD';
+export const REMOVE = 'pokedex/REMOVE';
+export const LIST = 'pokedex/LIST';
+export const DETAIL = 'pokedex/DETAIL';
+export const CHANGE_LIST = 'pokedex/CHANGE_LIST';
 
 const initialState = {
-  list: {}
+  list: {
+    results: []
+  }
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case ADD:
+      return {
+        ...state,
+        list: {
+          ...state.list,
+          results: [...state.list.results, action.payload]
+        }
+      };
+    case REMOVE:
+      return {
+        ...state,
+        list: {
+          ...state.list,
+          results: state.list.results.filter(
+            result => result.name !== action.payload.name
+          )
+        }
+      };
     case LIST:
       return {
         ...state,
@@ -24,6 +46,22 @@ export default (state = initialState, action) => {
     default:
       return state;
   }
+};
+
+export const add = pokemon => {
+  return dispatch =>
+    dispatch({
+      type: ADD,
+      payload: pokemon
+    });
+};
+
+export const remove = pokemon => {
+  return dispatch =>
+    dispatch({
+      type: REMOVE,
+      payload: pokemon
+    });
 };
 
 export const list = () => {

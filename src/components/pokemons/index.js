@@ -19,25 +19,37 @@ class Pokemons extends Component {
   }
 
   render() {
+    const ViewPagination = () => {
+      if (this.props.data.count) {
+        return (
+          <Row className="d-flex justify-content-center mt-4">
+            <Pagination>
+              <PaginationItem disabled={!this.props.data.previous}>
+                <PaginationLink
+                  onClick={() =>
+                    this.props.changeList(this.props.data.previous)
+                  }>
+                  Previous
+                </PaginationLink>
+              </PaginationItem>
+              <PaginationItem disabled={!this.props.data.next}>
+                <PaginationLink
+                  onClick={() => this.props.changeList(this.props.data.next)}>
+                  Next
+                </PaginationLink>
+              </PaginationItem>
+            </Pagination>
+          </Row>
+        );
+      }
+
+      return null;
+    };
+
     return (
       <div>
         <Row>{this.mountPokemons(this.props.data.results)}</Row>
-        <Row className="d-flex justify-content-center mt-4">
-          <Pagination>
-            <PaginationItem disabled={!this.props.data.previous}>
-              <PaginationLink
-                onClick={() => this.props.changeList(this.props.data.previous)}>
-                Previous
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem disabled={!this.props.data.next}>
-              <PaginationLink
-                onClick={() => this.props.changeList(this.props.data.next)}>
-                Next
-              </PaginationLink>
-            </PaginationItem>
-          </Pagination>
-        </Row>
+        <ViewPagination />
       </div>
     );
   }

@@ -1,31 +1,22 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import { push } from 'react-router-redux';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { list as listPokemons, changeList } from '../../modules/pokemon';
-import Pokemons from '../pokemons';
+import { list as listPokemons, changeList } from '../../modules/pokedex';
+import Pokemons from '../../components/pokemons';
 import Loading from '../../components/loading';
 
-import {
-  Container,
-  Row,
-  Col,
-  Input,
-  InputGroup,
-  InputGroupAddon,
-  Button
-} from 'reactstrap';
+import { Container, Row, Col, Alert } from 'reactstrap';
 
-class Home extends Component {
-  componentDidMount() {
-    this.props.listPokemons();
-  }
-
+class Pokedex extends Component {
   render() {
-    const Home = props => {
+    const Page = props => {
       if (_.isEmpty(props.pokemons)) {
         return <Loading />;
+      }
+
+      if (_.isEmpty(props.pokemons.results)) {
+        return <Alert color="warning">No pokémon has been inserted!</Alert>;
       }
 
       return <Pokemons data={props.pokemons} changeList={props.changeList} />;
@@ -33,19 +24,9 @@ class Home extends Component {
 
     return (
       <Container>
-        <Row className="my-4">
-          <Col xs="4">
-            <InputGroup>
-              <Input placeholder="search by name or number" />
-              <InputGroupAddon addonType="append">
-                <Button>search</Button>
-              </InputGroupAddon>
-            </InputGroup>
-          </Col>
-        </Row>
-        <Row>
+        <Row className="mt-4">
           <Col>
-            <Home
+            <Page
               pokemons={this.props.pokemons}
               changeList={this.props.changeList}
             />
@@ -57,19 +38,16 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => ({
-  pokemons: state.pokemon.list,
-  isIncrementing: state.pokemon.isIncrementing,
-  isDecrementing: state.pokemon.isDecrementing
+  pokemons: state.pokedex.list
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       listPokemons,
-      changeList,
-      alterPage: () => push('/about-us')
+      changeList
     },
     dispatch
   );
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Pokedex);

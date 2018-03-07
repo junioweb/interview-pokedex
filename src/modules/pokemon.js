@@ -16,9 +16,18 @@ export default (state = initialState, action) => {
         list: action.payload
       };
     case CHANGE_LIST:
+      if (action.payload.results) {
+        return {
+          ...state,
+          list: action.payload
+        };
+      }
       return {
         ...state,
-        list: action.payload
+        list: {
+          ...state.list,
+          results: [action.payload]
+        }
       };
 
     default:

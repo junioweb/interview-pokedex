@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import { push } from 'react-router-redux';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { list as listPokemons, changeList } from '../../modules/pokemon';
-import Pokemons from '../../components/pokemons';
+import PokemonsComponent from '../../components/pokemons';
 import Loading from '../../components/loading';
 
 import {
@@ -17,18 +16,24 @@ import {
   Button
 } from 'reactstrap';
 
-class Home extends Component {
+class Pokemons extends Component {
   componentDidMount() {
     this.props.listPokemons();
   }
 
   render() {
-    const Home = props => {
+    const baseUrl = 'https://pokeapi.co/api/v2/';
+    const Page = props => {
       if (_.isEmpty(props.pokemons)) {
         return <Loading />;
       }
 
-      return <Pokemons data={props.pokemons} changeList={props.changeList} />;
+      return (
+        <PokemonsComponent
+          data={props.pokemons}
+          changeList={props.changeList}
+        />
+      );
     };
 
     return (
@@ -36,16 +41,26 @@ class Home extends Component {
         <Row className="my-4">
           <Col xs="4">
             <InputGroup>
-              <Input placeholder="search by name or number" />
+              <Input
+                innerRef={input => (this.search = input)}
+                placeholder="search by name or number"
+              />
               <InputGroupAddon addonType="append">
-                <Button>search</Button>
+                <Button
+                  onClick={() =>
+                    this.props.changeList(
+                      baseUrl + 'pokemon/' + this.search.value
+                    )
+                  }>
+                  search
+                </Button>
               </InputGroupAddon>
             </InputGroup>
           </Col>
         </Row>
         <Row>
           <Col>
-            <Home
+            <Page
               pokemons={this.props.pokemons}
               changeList={this.props.changeList}
             />
@@ -57,19 +72,16 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => ({
-  pokemons: state.pokemon.list,
-  isIncrementing: state.pokemon.isIncrementing,
-  isDecrementing: state.pokemon.isDecrementing
+  pokemons: state.pokemon.list
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       listPokemons,
-      changeList,
-      alterPage: () => push('/about-us')
+      changeList
     },
     dispatch
   );
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Pokemons);

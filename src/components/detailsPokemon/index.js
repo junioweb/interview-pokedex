@@ -1,6 +1,22 @@
 import React from 'react';
 import { Col, Row, Button, ButtonGroup } from 'reactstrap';
 
+const ResolveButton = props => {
+  if (props.inserted) {
+    return (
+      <Button color="danger" onClick={props.removeFromPokedex}>
+        remove <small>pokedex</small>
+      </Button>
+    );
+  }
+
+  return (
+    <Button color="success" onClick={props.addInPokedex}>
+      add to pokedex
+    </Button>
+  );
+};
+
 const DetailsPokemon = props => (
   <div className="details">
     <Row>
@@ -21,7 +37,7 @@ const DetailsPokemon = props => (
         </p>
         <div className="d-flex justify-content-center">
           <ButtonGroup>
-            <Button color="success">add to pokedex</Button>{' '}
+            <ResolveButton {...props} />{' '}
             <Button outline color="primary">
               more details
             </Button>

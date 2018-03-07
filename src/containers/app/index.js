@@ -1,7 +1,8 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route, NavLink, Switch } from 'react-router-dom';
 import { Container } from 'reactstrap';
-import Home from '../home/index';
+import Pokemons from '../pokemons';
+import Pokedex from '../pokedex';
 
 const App = () => (
   <div>
@@ -10,12 +11,19 @@ const App = () => (
         <nav className="navbar navbar-expand-lg navbar-light" id="menu">
           <div className="collapse navbar-collapse justify-content-center">
             <div className="navbar-nav">
-              <Link to="/" className="nav-link active">
+              <NavLink
+                to="/"
+                exact
+                activeClassName="active"
+                className="nav-link">
                 Pokémons
-              </Link>
-              <Link to="/pokedex" className="nav-link">
+              </NavLink>
+              <NavLink
+                to="/pokedex"
+                activeClassName="active"
+                className="nav-link">
                 PokéDex
-              </Link>
+              </NavLink>
             </div>
           </div>
         </nav>
@@ -23,8 +31,10 @@ const App = () => (
     </Container>
 
     <main>
-      {<Route exact path="/" component={Home} />}
-      {/*<Route exact path="/pokedex" component={About} />*/}
+      <Switch>
+        <Route exact path="/" component={Pokemons} />
+        <Route path="/pokedex" component={Pokedex} />
+      </Switch>
     </main>
   </div>
 );

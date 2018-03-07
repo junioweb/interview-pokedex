@@ -42,7 +42,6 @@ class Pokemon extends Component {
 
   toggle(pokemon) {
     this.setState((prevState, props) => {
-      console.log(props);
       if (!prevState.collapse && props.data.url) {
         this.props
           .detailPokemon(pokemon)

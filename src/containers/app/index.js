@@ -12,14 +12,14 @@ const App = () => (
           <div className="collapse navbar-collapse justify-content-center">
             <div className="navbar-nav">
               <NavLink
-                to="/"
+                to="/interview-pokedex/"
                 exact
                 activeClassName="active"
                 className="nav-link">
                 Pokémons
               </NavLink>
               <NavLink
-                to="/pokedex"
+                to="/interview-pokedex/pokedex"
                 activeClassName="active"
                 className="nav-link">
                 PokéDex
@@ -32,8 +32,8 @@ const App = () => (
 
     <main>
       <Switch>
-        <Route exact path="/" component={Pokemons} />
-        <Route path="/pokedex" component={Pokedex} />
+        <Route exact path="/interview-pokedex/" component={Pokemons} />
+        <Route path="/interview-pokedex/pokedex" component={Pokedex} />
       </Switch>
     </main>
   </div>

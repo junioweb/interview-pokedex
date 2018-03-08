@@ -98,11 +98,8 @@ const MoreDetailsPokemon = props => (
       <DataTableStats data={props.data.stats} />
     </ModalBody>
     <ModalFooter>
-      <Button color="primary" onClick={props.toggle}>
-        Do Something
-      </Button>{' '}
       <Button color="secondary" onClick={props.toggle}>
-        Cancel
+        Close
       </Button>
     </ModalFooter>
   </Modal>

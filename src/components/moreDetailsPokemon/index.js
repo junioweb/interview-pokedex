@@ -1,8 +1,73 @@
 import React from 'react';
-import { Modal, ModalHeader, Button, ModalBody, ModalFooter, Table } from 'reactstrap';
+import {
+  Modal,
+  ModalHeader,
+  Button,
+  ModalBody,
+  ModalFooter,
+  Table
+} from 'reactstrap';
+
+const DataTableStats = props => {
+  const dados = props.data || [];
+
+  const Rows = () =>
+    dados.map((dado, key) => (
+      <tr key={key}>
+        <td>{dado.stat.name}</td>
+        <td>{dado.effort}</td>
+        <td>{dado.base_stat}</td>
+      </tr>
+    ));
+
+  return (
+    <Table size="sm">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Effort</th>
+          <th>Base Stat</th>
+        </tr>
+      </thead>
+      <tbody>
+        <Rows />
+      </tbody>
+    </Table>
+  );
+};
+
+const DataTableDefault = props => {
+  const dados = props.data || [];
+
+  const Rows = () =>
+    dados.map((dado, key) => (
+      <tr key={key}>
+        <th scope="row">{dado.slot}</th>
+        <td>{dado[props.resource].name}</td>
+      </tr>
+    ));
+
+  return (
+    <Table size="sm">
+      <thead>
+        <tr>
+          <th>Slot</th>
+          <th>Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <Rows />
+      </tbody>
+    </Table>
+  );
+};
 
 const MoreDetailsPokemon = props => (
-  <Modal size="sm" isOpen={props.isOpen} toggle={props.toggle} className={props.className}>
+  <Modal
+    size="sm"
+    isOpen={props.isOpen}
+    toggle={props.toggle}
+    className={props.className}>
     <ModalHeader toggle={props.toggle}>Datasheet</ModalHeader>
     <ModalBody>
       <img
@@ -10,36 +75,35 @@ const MoreDetailsPokemon = props => (
         className="rounded mx-auto d-block"
         alt={'Front default ' + props.data.name}
       />
-      <p className="lead">
+      <p>
         <strong>Name:</strong> {props.data.name}
       </p>
-      <p className="lead">
+      <p>
         <strong>Weight:</strong> {props.data.weight}
       </p>
-      <p className="lead">
+      <p>
         <strong>Height:</strong> {props.data.height}
       </p>
-      <p className="lead">
+      <p>
         <strong>Types:</strong>
       </p>
-      <Table>
-        <thead>
-        <tr>
-          <th>#</th>
-          <th>Name</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-        </tr>
-        </tbody>
-      </Table>
+      <DataTableDefault data={props.data.types} resource="type" />
+      <p>
+        <strong>Abilities:</strong>
+      </p>
+      <DataTableDefault data={props.data.abilities} resource="ability" />
+      <p>
+        <strong>Stats:</strong>
+      </p>
+      <DataTableStats data={props.data.stats} />
     </ModalBody>
     <ModalFooter>
-      <Button color="primary" onClick={props.toggle}>Do Something</Button>{' '}
-      <Button color="secondary" onClick={props.toggle}>Cancel</Button>
+      <Button color="primary" onClick={props.toggle}>
+        Do Something
+      </Button>{' '}
+      <Button color="secondary" onClick={props.toggle}>
+        Cancel
+      </Button>
     </ModalFooter>
   </Modal>
 );

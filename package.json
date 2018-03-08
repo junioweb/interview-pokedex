@@ -38,7 +38,7 @@
     "eject": "react-scripts eject",
     "precommit": "lint-staged"
   },
-  "homepage": "https://cra-redux-router-thunk.herokuapp.com",
+  "homepage": "https://junioweb.github.io/interview-pokedex/",
   "lint-staged": {
     "*.{js,json,css,md}": ["prettier --write", "git add"]
   }
